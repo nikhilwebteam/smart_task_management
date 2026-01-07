@@ -42,7 +42,6 @@ export default function TaskForm() {
     setFieldErrors({});
     setLoading(true);
 
-    // Frontend rules
     if (formData.title.length < 5) {
       setFieldErrors({ title: "Title must be at least 5 characters" });
       setLoading(false);
@@ -78,54 +77,80 @@ export default function TaskForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center
+                    bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900
+                    px-4 py-8">
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full max-w-sm sm:max-w-md md:max-w-lg 
-                   rounded-2xl shadow-lg p-6 sm:p-8 md:p-10"
+        className="w-full max-w-md
+                   bg-slate-900/80 backdrop-blur
+                   border border-slate-800
+                   rounded-2xl shadow-2xl
+                   p-6 sm:p-8 space-y-6"
       >
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 text-center">
           {isEdit ? "Edit Task" : "Add Task"}
         </h2>
 
         {error && (
-          <div className="bg-red-100 text-red-700 p-3 mb-4 rounded text-sm">
+          <div className="bg-red-500/10 border border-red-500/30
+                          text-red-400 px-4 py-3 rounded-lg text-sm">
             {error}
           </div>
         )}
 
-        <div className="mb-4">
-          <label className="block mb-1">Title *</label>
+        {/* Title */}
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Title *
+          </label>
           <input
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full rounded-lg bg-slate-800/70 border border-slate-700
+                       px-4 py-2.5 text-slate-100 placeholder-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500
+                       focus:border-indigo-500 transition"
+            placeholder="Task title"
           />
           {fieldErrors.title && (
-            <p className="text-red-600 text-sm mt-1">{fieldErrors.title}</p>
+            <p className="text-red-400 text-sm mt-1">{fieldErrors.title}</p>
           )}
         </div>
 
-        <div className="mb-4">
-          <label className="block mb-1">Description</label>
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Description
+          </label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             rows="3"
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full rounded-lg bg-slate-800/70 border border-slate-700
+                       px-4 py-2.5 text-slate-100 placeholder-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500
+                       focus:border-indigo-500 transition"
+            placeholder="Task description"
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block mb-1">Priority</label>
+        {/* Priority */}
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Priority
+          </label>
           <select
             name="priority"
             value={formData.priority}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full rounded-lg bg-slate-800/70 border border-slate-700
+                       px-4 py-2.5 text-slate-100
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500
+                       focus:border-indigo-500 transition"
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -133,13 +158,19 @@ export default function TaskForm() {
           </select>
         </div>
 
-        <div className="mb-6">
-          <label className="block mb-1">Status</label>
+        {/* Status */}
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Status
+          </label>
           <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full border rounded-lg px-3 py-2"
+            className="w-full rounded-lg bg-slate-800/70 border border-slate-700
+                       px-4 py-2.5 text-slate-100
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500
+                       focus:border-indigo-500 transition"
           >
             <option value="pending">Pending</option>
             <option value="in-progress">In Progress</option>
@@ -147,20 +178,26 @@ export default function TaskForm() {
           </select>
         </div>
 
+        {/* Buttons */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          className="w-full py-3 rounded-lg font-medium text-white
+                     bg-gradient-to-r from-indigo-500 to-violet-500
+                     hover:from-indigo-600 hover:to-violet-600
+                     transition disabled:opacity-50"
         >
           {loading ? "Saving..." : isEdit ? "Update Task" : "Create Task"}
         </button>
 
-          <button
-            onClick={() => navigate("/tasks")}
-            className="w-full bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 disabled:opacity-50 mt-2"
-          >
-            MY Tasks
-          </button>
+        <button
+          type="button"
+          onClick={() => navigate("/tasks")}
+          className="w-full py-3 rounded-lg font-medium text-white
+                     bg-gray-700 hover:bg-gray-600 transition"
+        >
+          My Tasks
+        </button>
       </form>
     </div>
   );

@@ -24,9 +24,11 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/auth/register", formData);
+      const res = await axios.post(
+        "http://localhost:8000/api/auth/register",
+        formData
+      );
 
-      // optional: auto login token if backend sends it
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
@@ -40,73 +42,114 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-0">
+    <div
+      className="min-h-screen flex items-center justify-center
+                 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900
+                 px-4 py-8"
+    >
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full max-w-sm sm:max-w-md md:max-w-lg 
-                   rounded-2xl shadow-lg 
-                   p-6 sm:p-8 md:p-10"
+        className="w-full max-w-md
+                   bg-slate-900/80 backdrop-blur
+                   border border-slate-800
+                   rounded-2xl shadow-2xl
+                   p-6 sm:p-8 space-y-6"
       >
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 text-center">
           Create Account
         </h2>
 
         {error && (
-          <div className="bg-red-100 text-red-700 p-3 mb-4 rounded text-sm sm:text-base">
+          <div className="bg-red-500/10 border border-red-500/30
+                          text-red-400 px-4 py-3 rounded-lg text-sm">
             {error}
           </div>
         )}
 
-        <div className="mb-4">
-          <label className="block text-sm sm:text-base mb-1">Username</label>
+        {/* Username */}
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Username
+          </label>
           <input
             type="text"
             name="uname"
             value={formData.uname}
             onChange={handleChange}
             required
-            className="w-full border rounded-lg px-3 py-2.5 sm:py-2 
-                       focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Your username"
+            className="w-full rounded-lg bg-slate-800/70
+                       border border-slate-700
+                       px-4 py-2.5 text-slate-100
+                       placeholder-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500
+                       focus:border-indigo-500 transition"
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-sm sm:text-base mb-1">Email</label>
+        {/* Email */}
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Email
+          </label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full border rounded-lg px-3 py-2.5 sm:py-2 
-                       focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="you@example.com"
+            className="w-full rounded-lg bg-slate-800/70
+                       border border-slate-700
+                       px-4 py-2.5 text-slate-100
+                       placeholder-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500
+                       focus:border-indigo-500 transition"
           />
         </div>
 
-        <div className="mb-6">
-          <label className="block text-sm sm:text-base mb-1">Password</label>
+        {/* Password */}
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Password
+          </label>
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
-            className="w-full border rounded-lg px-3 py-2.5 sm:py-2 
-                       focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="••••••••"
+            className="w-full rounded-lg bg-slate-800/70
+                       border border-slate-700
+                       px-4 py-2.5 text-slate-100
+                       placeholder-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500
+                       focus:border-indigo-500 transition"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white 
-                     py-3 sm:py-2.5 
-                     rounded-lg font-medium 
-                     hover:bg-blue-700 transition 
-                     disabled:opacity-50"
+          className="w-full py-3 rounded-lg font-medium text-white
+                     bg-gradient-to-r from-indigo-500 to-violet-500
+                     hover:from-indigo-600 hover:to-violet-600
+                     transition
+                     disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Registering..." : "Register"}
         </button>
+
+        <div className="text-center text-slate-400 text-sm">
+          Already have an account?{" "}
+          <span
+            className="text-indigo-400 hover:text-indigo-500 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            Login
+          </span>
+        </div>
       </form>
     </div>
   );

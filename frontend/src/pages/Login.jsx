@@ -29,7 +29,6 @@ export default function Login() {
       );
 
       localStorage.setItem("token", res.data.token);
-
       alert("Login successful");
       navigate("/tasks");
     } catch (err) {
@@ -40,73 +39,111 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-0">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white w-full max-w-sm sm:max-w-md md:max-w-lg 
-                   rounded-2xl shadow-lg 
-                   p-6 sm:p-8 md:p-10"
-      >
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center">
-          Login
-        </h2>
-
-        {error && (
-          <div className="bg-red-100 text-red-700 p-3 mb-4 rounded text-sm sm:text-base">
-            {error}
+    <div className="min-h-screen flex items-center justify-center
+                    bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-4">
+      <div className="w-full max-w-md">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-slate-900/80 backdrop-blur
+                     border border-slate-800
+                     rounded-2xl shadow-2xl
+                     p-6 sm:p-8 space-y-6"
+        >
+          {/* Header */}
+          <div className="text-center">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100">
+              Welcome Back
+            </h2>
+            <p className="text-slate-400 text-sm mt-1">
+              Sign in to your account
+            </p>
           </div>
-        )}
 
-        <div className="mb-4">
-          <label className="block text-sm sm:text-base mb-1">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full border rounded-lg px-3 py-2.5 sm:py-2 
-                       focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30
+                            text-red-400 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
 
-        <div className="mb-6">
-          <label className="block text-sm sm:text-base mb-1">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="w-full border rounded-lg px-3 py-2.5 sm:py-2 
-                       focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+              placeholder="you@example.com"
+              className="w-full rounded-lg bg-slate-800/70
+                         border border-slate-700
+                         px-4 py-2.5 text-slate-100
+                         placeholder-slate-500
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500
+                         focus:border-indigo-500 transition"
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white 
-                     py-3 sm:py-2.5 
-                     rounded-lg font-medium 
-                     hover:bg-blue-700 transition 
-                     disabled:opacity-50"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              autoComplete="current-password"
+              placeholder="••••••••"
+              className="w-full rounded-lg bg-slate-800/70
+                         border border-slate-700
+                         px-4 py-2.5 text-slate-100
+                         placeholder-slate-500
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500
+                         focus:border-indigo-500 transition"
+            />
+          </div>
 
-        <button
-          onClick={()=>{navigate ('/register')}}
-          
-          className="w-full bg-green-500 text-white 
-                     py-3 sm:py-2.5 mt-2 
-                     rounded-lg font-medium 
-                     hover:bg-green-700 transition 
-                     disabled:opacity-50"
-        >
-         Register
-        </button>
-      </form>
+          {/* Login Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-lg font-medium text-white
+                       bg-gradient-to-r from-indigo-500 to-violet-500
+                       hover:from-indigo-600 hover:to-violet-600
+                       transition
+                       disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-slate-700" />
+            <span className="text-xs text-slate-500 uppercase tracking-wider">
+              or
+            </span>
+            <div className="flex-1 h-px bg-slate-700" />
+          </div>
+
+          {/* Register */}
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
+            className="w-full py-3 rounded-lg font-medium
+                       bg-slate-800 text-slate-200
+                       hover:bg-slate-700 transition"
+          >
+            Create an account
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

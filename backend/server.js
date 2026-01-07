@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require("cors")
 const mongoose = require('mongoose')
-require('dotenv').config()
+require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes.js')
 const taskRoutes = require('./routes/taskRoutes.js')
@@ -25,7 +25,7 @@ app.use('/api/',authenticate,require('./routes/profileRoutes.js'))
 
 //test route
 app.get("/",(req,res)=> {
-   return res.send({message:"hellow from server"})
+   return res.send({message:"hello from server"})
 })
 
 

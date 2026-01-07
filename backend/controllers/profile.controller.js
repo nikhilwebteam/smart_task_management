@@ -1,5 +1,5 @@
 const User = require("../models/user.model.js");
-const { comparePassword } = require("../utils/password.js");
+const { comparePassword, hashPassword } = require("../utils/password.js");
 
 
 //handling user profile 
@@ -19,18 +19,20 @@ async function handleUserProfile (req, res) {
 module.exports = {handleUserProfile};
 
 //handling change password
-async function handleChangePassword (req, res) {
+async function handleChangePassword(req, res) {
   try {
-    const { oldPassword, newPassword } = req.body;
-   
-    //Find user by id
-    const user = await User.findById(req.user.id);
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Both passwords are required" });
+    }
+
+    const user = await User.findById(req.user.id).select("+password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    //Compare old password if matches
-    const isMatch = await comparePassword(oldPassword, user.password);
+    const isMatch = await comparePassword(currentPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Current password is incorrect" });
     }
@@ -44,4 +46,6 @@ async function handleChangePassword (req, res) {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+
+
 module.exports = { handleUserProfile, handleChangePassword };
