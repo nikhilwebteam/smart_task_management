@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import profile from "../../public/profile.png";
+import { MdOutlineLogout } from "react-icons/md";
+
 
 export default function Tasks() {
   const navigate = useNavigate();
@@ -79,8 +81,23 @@ export default function Tasks() {
             </h1>
             <div className="flex items-center gap-3 cursor-pointer"
                  onClick={() => navigate("/profile")}>
-              <img src={profile} alt="Profile" className="w-10 h-10 rounded-full object-cover" />
+              <img src={profile} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
               <span className="text-slate-200 font-medium">Profile</span>
+              
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-3 mt-2">
+           
+            <button
+              onClick={logout}
+              title="logout"
+              className="w-full sm:w-auto rounded-lg font-medium
+                         text-white hover:slate-600 transition cursor-pointer mb-2 "
+            >
+              <MdOutlineLogout />
+
+            </button>
+          </div>
+
             </div>
           </div>
 
@@ -124,28 +141,19 @@ export default function Tasks() {
               <option value="asc">Priority Low → High</option>
               <option value="desc">Priority High → Low</option>
             </select>
-
-            <button
+             <button
               onClick={() => navigate("/tasks/new")}
-              className="w-full md:w-auto py-2.5 rounded-lg font-medium
+              className="w-full sm:w-auto px-3 py-2 rounded-lg font-medium
                          bg-gradient-to-r from-indigo-500 to-violet-500
                          text-white hover:from-indigo-600 hover:to-violet-600
                          transition"
             >
               Add Task
             </button>
-
-            <button
-              onClick={logout}
-              className="w-full md:w-auto py-2.5 rounded-lg font-medium
-                         bg-red-500 text-white hover:bg-red-600 transition"
-            >
-              Logout
-            </button>
           </div>
 
           {/* Tasks Table */}
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto mt-4">
             <table className="w-full border-collapse text-slate-100">
               <thead>
                 <tr className="bg-slate-800/70 text-left text-sm uppercase">
