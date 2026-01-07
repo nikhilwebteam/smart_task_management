@@ -6,6 +6,8 @@ require('dotenv').config()
 
 const authRoutes = require('./routes/authRoutes.js')
 const taskRoutes = require('./routes/taskRoutes.js')
+const profileRoutes = require('./routes/profileRoutes.js')
+
 const {} = require('./middleware/auth.middleware.js');
 const authenticate = require('./middleware/auth.middleware.js');
 app.use(cors());
@@ -19,7 +21,7 @@ app.use('/api/auth/',authRoutes)
 
 //Protected routes
 app.use('/api/tasks',authenticate,taskRoutes)
-
+app.use('/api/',authenticate,require('./routes/profileRoutes.js'))
 
 //test route
 app.get("/",(req,res)=> {

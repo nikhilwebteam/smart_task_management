@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Tasks from "./pages/Tasks";
+import Profile from "./pages/Profile";
 import TaskForm from "./pages/TaskForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -37,7 +38,19 @@ function App() {
               <TaskForm />
             </ProtectedRoute>
           }
+      
         />
+
+           <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+      
+        />
+
       </Routes>
     </BrowserRouter>
   );
