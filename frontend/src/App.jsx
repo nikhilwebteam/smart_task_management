@@ -5,10 +5,26 @@ import Tasks from "./pages/Tasks";
 import Profile from "./pages/Profile";
 import TaskForm from "./pages/TaskForm";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <BrowserRouter>
+      {/* ToastContainer at root so it works everywhere */}
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -22,7 +38,7 @@ function App() {
           }
         />
 
-         <Route
+        <Route
           path="/tasks/new"
           element={
             <ProtectedRoute>
@@ -31,26 +47,23 @@ function App() {
           }
         />
 
-           <Route
+        <Route
           path="/tasks/edit/:id"
           element={
             <ProtectedRoute>
               <TaskForm />
             </ProtectedRoute>
           }
-      
         />
 
-           <Route
+        <Route
           path="/profile"
           element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
           }
-      
         />
-
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import api from '../api/axios';
+import {showSuccessToast ,showErrorToast } from "../components/Toast.jsx";
+
 
 const UpdatePassword = ({ setShowChangePassword }) => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -22,13 +24,15 @@ const UpdatePassword = ({ setShowChangePassword }) => {
       setPasswordMessage(res.data.message);
       setCurrentPassword("");
       setNewPassword("");
-
+      
       setTimeout(() => {
         setShowChangePassword(false);
       }, 1000);
 
+      showSuccessToast("Password updated successfully");
     } catch (err) {
       setPasswordError(err.response?.data?.message || "Failed to update password");
+      showErrorToast("Failed to update password");
     }
   }
 

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {showSuccessToast ,showErrorToast } from "../components/Toast.jsx";
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -29,10 +31,11 @@ export default function Login() {
       );
 
       localStorage.setItem("token", res.data.token);
-      alert("Login successful");
+      showSuccessToast("Login successful");
       navigate("/tasks");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
+      showErrorToast("Login failed");
     } finally {
       setLoading(false);
     }

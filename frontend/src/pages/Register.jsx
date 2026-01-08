@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {showSuccessToast ,showErrorToast } from "../components/Toast.jsx";
+
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -31,11 +33,13 @@ export default function Register() {
 
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
+        showSuccessToast("Registration successful");
       }
 
       navigate("/tasks");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
+      showErrorToast("Registration failed");
     } finally {
       setLoading(false);
     }
@@ -44,7 +48,7 @@ export default function Register() {
   return (
     <div
       className="min-h-screen flex items-center justify-center
-                 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900
+                 bg-linear-to-br from-slate-900 via-indigo-950 to-slate-900
                  px-4 py-8"
     >
       <form
@@ -133,7 +137,7 @@ export default function Register() {
           type="submit"
           disabled={loading}
           className="w-full py-3 rounded-lg font-medium text-white
-                     bg-gradient-to-r from-indigo-500 to-violet-500
+                     bg-linear-to-r from-indigo-500 to-violet-500
                      hover:from-indigo-600 hover:to-violet-600
                      transition
                      disabled:opacity-50 disabled:cursor-not-allowed"

@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axios";
 import DateInput from "../components/DateSelector";
 import UserSelect from "../components/AssigningTask";
+import {showSuccessToast ,showErrorToast } from "../components/Toast.jsx";
+
 
 export default function TaskForm() {
   const { id } = useParams();
@@ -62,20 +64,26 @@ export default function TaskForm() {
       }
     }
 
+
     try {
       if (isEdit) {
         await api.put(`/tasks/${id}`, formData);
+        showSuccessToast("Task updated successfully");
       } else {
         await api.post("/tasks", formData);
+        showSuccessToast("Task created successfully");
       }
       navigate("/tasks");
     } catch (err) {
       const msg = err.response?.data?.message;
       if (msg && msg.includes("validation")) {
         setError(msg);
+
       } else {
         setError(msg || "Something went wrong");
+
       }
+      showErrorToast("Failed to save task");
     } finally {
       setLoading(false);
     }
