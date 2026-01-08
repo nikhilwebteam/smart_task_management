@@ -1,34 +1,33 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require("cors")
-const mongoose = require('mongoose')
-require('dotenv').config();
+const cors = require("cors");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const authRoutes = require('./routes/authRoutes.js')
-const taskRoutes = require('./routes/taskRoutes.js')
-const profileRoutes = require('./routes/profileRoutes.js')
+const authRoutes = require("./routes/authRoutes.js");
+const taskRoutes = require("./routes/taskRoutes.js");
+const profileRoutes = require("./routes/profileRoutes.js");
+const userRoutes = require("./routes/userRoutes.js");
 
-const {} = require('./middleware/auth.middleware.js');
-const authenticate = require('./middleware/auth.middleware.js');
+const {} = require("./middleware/auth.middleware.js");
+const authenticate = require("./middleware/auth.middleware.js");
 app.use(cors());
 
-// Middleware to parse 
+// Middleware to parse
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //auth routes
-app.use('/api/auth/',authRoutes)
+app.use("/api/auth/", authRoutes);
 
 //Protected routes
-app.use('/api/tasks',authenticate,taskRoutes)
-app.use('/api/',authenticate,require('./routes/profileRoutes.js'))
-
+app.use("/api/tasks", authenticate, taskRoutes);
+app.use("/api/", authenticate, require("./routes/profileRoutes.js"));
+app.use("/api/users", authenticate, userRoutes);
 //test route
-app.get("/",(req,res)=> {
-   return res.send({message:"hello from server"})
-})
-
-
+app.get("/", (req, res) => {
+  return res.send({ message: "hello from server" });
+});
 
 // Connect to MongoDB
 mongoose
@@ -36,6 +35,6 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-app.listen(process.env.PORT,()=>{
-   console.log(`Server is running on port ${process.env.PORT}`);
-})
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});

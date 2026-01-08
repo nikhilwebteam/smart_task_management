@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/axios";
+import DateInput from "../components/DateSelector";
+import UserSelect from "../components/AssigningTask";
 
 export default function TaskForm() {
   const { id } = useParams();
@@ -11,7 +13,9 @@ export default function TaskForm() {
     title: "",
     description: "",
     priority: "medium",
+    dueDate: "",
     status: "pending",
+    assignedUser: null,
   });
 
   const [error, setError] = useState("");
@@ -20,11 +24,12 @@ export default function TaskForm() {
 
   useEffect(() => {
     if (isEdit) {
-      api.get(`/tasks/${id}`).then(res => {
+      api.get(`/tasks/${id}`).then((res) => {
         setFormData({
           title: res.data.title,
           description: res.data.description || "",
           priority: res.data.priority || "medium",
+          dueDate: res.data.dueDate ? res.data.dueDate.split("T")[0] : "",
           status: res.data.status || "pending",
         });
       });
@@ -33,7 +38,7 @@ export default function TaskForm() {
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setFieldErrors(prev => ({ ...prev, [e.target.name]: "" }));
+    setFieldErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   }
 
   async function handleSubmit(e) {
@@ -77,9 +82,11 @@ export default function TaskForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center
-                    bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900
-                    px-4 py-8">
+    <div
+      className="min-h-screen flex items-center justify-center
+                    bg-linear-to-br from-slate-900 via-indigo-950 to-slate-900
+                    px-4 py-8"
+    >
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md
@@ -93,8 +100,10 @@ export default function TaskForm() {
         </h2>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30
-                          text-red-400 px-4 py-3 rounded-lg text-sm">
+          <div
+            className="bg-red-500/10 border border-red-500/30
+                          text-red-400 px-4 py-3 rounded-lg text-sm"
+          >
             {error}
           </div>
         )}
@@ -178,12 +187,29 @@ export default function TaskForm() {
           </select>
         </div>
 
+        {/* Due Date */}
+
+        <DateInput
+          label="Due Date"
+          name="dueDate"
+          value={formData.dueDate}
+          onChange={handleChange}
+          error={fieldErrors.dueDate}
+        />
+
+        {/* Assigned User */}
+        <UserSelect
+          value={formData.assignedUser}
+          onChange={handleChange}
+          error={fieldErrors.assignedUser}
+        />
+
         {/* Buttons */}
         <button
           type="submit"
           disabled={loading}
           className="w-full py-3 rounded-lg font-medium text-white
-                     bg-gradient-to-r from-indigo-500 to-violet-500
+                     bg-linear-to-r from-indigo-500 to-violet-500
                      hover:from-indigo-600 hover:to-violet-600
                      transition disabled:opacity-50"
         >

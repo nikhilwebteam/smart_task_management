@@ -20,6 +20,13 @@ const taskSchema = new mongoose.Schema({
     enum: ["low", "medium", "high"],
     default: "medium",
   },
+  dueDate: {
+    type: Date,
+  },
+  assignedUser: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   isDeleted: {
     type: Boolean,
     default: false,

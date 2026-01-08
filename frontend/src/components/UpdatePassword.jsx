@@ -67,7 +67,7 @@ const UpdatePassword = ({ setShowChangePassword }) => {
             <button
               type="submit"
               className="w-full py-2 rounded-lg font-medium text-white
-                         bg-gradient-to-r from-indigo-500 to-violet-500
+                         bg-linear-to-r from-indigo-500 to-violet-500
                          hover:from-indigo-600 hover:to-violet-600
                          transition"
             >

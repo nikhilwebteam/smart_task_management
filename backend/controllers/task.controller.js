@@ -3,13 +3,15 @@ const Task = require("../models/task.model.js");
 // Create and Save a new Task
 async function handleCreateTask(req, res) {
   try {
-    const { title, description, status, priority } = req.body;
+    const { title, description, status, priority,dueDate, assignedUser } = req.body;
 
     const newTask = new Task({
       title,
       description,
       status,
       priority,
+      dueDate,
+      assignedUser,
       user: req.user.id,
     });
 
@@ -26,7 +28,14 @@ async function handleCreateTask(req, res) {
 // Retrieve all Tasks
 async function handleGetAllTasks(req, res) {
   try {
-    const tasks = await Task.find({ user: req.user.id, isDeleted: false });
+    const tasks = await Task.find({
+      isDeleted: false,
+      $or: [
+        { user: req.user.id },          // tasks the user created
+        { assignedUser: req.user.id },  // tasks assigned to the user
+      ],
+    }).populate("assignedUser", "uname email");
+
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -40,7 +49,7 @@ async function handleGetTaskById(req, res) {
       _id: req.params.id,
       user: req.user.id,
       isDeleted: false
-    });
+    }).populate("assignedUser", "uname email");
 
     if (!task) {
       return res.status(404).json({ message: "Task not found" });

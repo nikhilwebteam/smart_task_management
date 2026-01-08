@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-import avatar from "../../public/profile.png";
+import avatar from "./../assets/profile.png";
 import UpdatePassword from "../components/UpdatePassword.jsx";
 
 export default function Profile() {
@@ -32,7 +32,7 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen flex justify-center items-center
-                    bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900
+                    bg-linear-to-br from-slate-900 via-indigo-950 to-slate-900
                     px-4 py-8">
       <div className="bg-slate-900/80 backdrop-blur border border-slate-800
                       shadow-2xl rounded-2xl p-8 w-full max-w-md text-center space-y-4">
@@ -49,7 +49,7 @@ export default function Profile() {
           <button
             onClick={() => navigate("/tasks")}
             className="w-full py-3 rounded-lg font-medium text-white
-                       bg-gradient-to-r from-indigo-500 to-violet-500
+                       bg-linear-to-r from-indigo-500 to-violet-500
                        hover:from-indigo-600 hover:to-violet-600
                        transition"
           >
